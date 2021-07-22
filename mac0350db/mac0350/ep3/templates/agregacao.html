@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>Resultado da Agregacao</h1>
+  {% if agregacao_result_list %}
+    <p>TOTAL: {{agregacao_result_list | length}}</p>
+    {% for row in agregacao_result_list %}
+    <ul>
+      <li><p>Paciente: {{row.paciente}}</p> </li>
+      <li><p>Amostra: {{row.amostra}}</p> </li>
+      <li><p>Exame: {{row.exame}}</p> </li>
+      <li><p>Data Realizacao: {{row.data_de_realizacao}}</p> </li>
+      <li><p>Data Solicitacao: {{row.data_de_solicitacao}}</p> </li>
+    </ul>
+    <br>
+    {% endfor %}
+  {% else %}
+    <p>No results are available.</p>
+  {% endif %}
+</body>
+</html>
