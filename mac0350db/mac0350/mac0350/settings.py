@@ -84,22 +84,22 @@ DATABASES = {
 """
 
 DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql',
-#        'NAME': '9910568@data', 
-#        'USER': '9910568@data',
-#        'PASSWORD': '', #senha para conectar no banco
-#        'HOST': 'data.ime.usp.br',
-#        'PORT': '23432',
-#    }
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mydb',
-        'USER': 'lara',
-        'PASSWORD': 'boba',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': '11221776@data', 
+        'USER': '11221776@data',
+        'PASSWORD': 'iulae7Oh', #senha para conectar no banco
+        'HOST': 'data.ime.usp.br',
+        'PORT': '23432',
     }
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': 'mydb',
+#        'USER': 'lara',
+#        'PASSWORD': 'boba',
+#        'HOST': 'localhost',
+#        'PORT': '5432',
+#    }
 }
 
 

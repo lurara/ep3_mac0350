@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>Lista de Amostras</h1>
+  {% if query_amostras_result_list %}
+    <p>TOTAL: {{query_amostras_result_list | length}}</p>
+    {% for row in query_amostras_result_list %}
+    <ul>
+      <li><p>Codigo da amostra: {{row.codigo_amostra}}</p> </li>
+      <li><p>Método da coleta: {{row.metodo_de_coleta}}</p> </li>
+      <li><p>material: {{row.material}}</p> </li>
+    </ul>
+    <br>
+    {% endfor %}
+  {% else %}
+    <p>No results are available.</p>
+  {% endif %}
+</body>
+</html>

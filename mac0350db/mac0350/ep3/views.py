@@ -13,17 +13,17 @@ from django.template import loader
 def index(request):
     return HttpResponse("MAC0350: EP3")
 
-def query1(request):
+def query_usuario(request): # Antigo query 1
     with connection.cursor() as cursor:
         cursor.execute('SELECT * FROM ep3_usuario')
         result = named_tuple_fetchall(cursor)
     
-    template = loader.get_template('query1.html')
-    context = {'query1_result_list': result,}
+    template = loader.get_template('usuarios.html')
+    context = {'query_usuario_list': result,}
     
     return HttpResponse(template.render(context, request))
 
-def query2(request):
+def query_usuario_perfil(request): # Antigo query 2
     with connection.cursor() as cursor:
         cursor.execute('\
                 SELECT u.nome, u.login, u.cpf, string_agg(p.tipo, \', \') as perfis FROM ep3_usuario as u\
@@ -35,12 +35,13 @@ def query2(request):
                 ')
         result = named_tuple_fetchall(cursor)
     print(result)
-    template = loader.get_template('query2.html')
-    context = {'query2_result_list': result,}
+    template = loader.get_template('usuario_perfil.html')
+    context = {'query_usuario_perfil_result_list': result,}
     
     return HttpResponse(template.render(context, request))
+
 #metodos auxiliares
-def agregacao(request): # arrumar agregacao
+def agregacao(request): # arrumar agregacao - Agregação Paciente Amostra Exame
     with connection.cursor() as cursor:
         cursor.execute('\
                 SELECT ag.data_de_realizacao, ag.data_de_solicitacao, \
@@ -59,6 +60,58 @@ def agregacao(request): # arrumar agregacao
     
     template = loader.get_template('agregacao.html')
     context = {'agregacao_result_list': result,}
+    
+    return HttpResponse(template.render(context, request))
+
+def query_perfis(request):
+    with connection.cursor() as cursor: # verificar nome da tabela e campos
+        cursor.execute('\
+                SELECT p.codigo, p.tipo\
+                FROM ep3_perfil as p\
+                ')
+        result = named_tuple_fetchall(cursor)
+    print(result)
+    template = loader.get_template('perfis.html')
+    context = {'query_perfis_result_list': result,}
+    
+    return HttpResponse(template.render(context, request))
+
+def query_pacientes(request):
+    with connection.cursor() as cursor: # verificar nome da tabela e campos
+        cursor.execute('\
+                SELECT p.cpf, p.nome, p.endereco, p.data_de_nascimento\
+                FROM ep3_paciente as p\
+                ')
+        result = named_tuple_fetchall(cursor)
+    print(result)
+    template = loader.get_template('pacientes.html')
+    context = {'query_pacientes_result_list': result,}
+    
+    return HttpResponse(template.render(context, request))
+
+def query_exames(request):
+    with connection.cursor() as cursor: # verificar nome da tabela e campos
+        cursor.execute('\
+                SELECT e.tipo, e.virus, e.id_paciente\
+                FROM ep3_exame as e\
+                ')
+        result = named_tuple_fetchall(cursor)
+    print(result)
+    template = loader.get_template('exames.html')
+    context = {'query_exames_result_list': result,}
+    
+    return HttpResponse(template.render(context, request))
+
+def query_amostras(request):
+    with connection.cursor() as cursor: # verificar nome da tabela e campos
+        cursor.execute('\
+                SELECT a.tipo, a.virus, a.id_paciente\
+                FROM ep3_amostra as a\
+                ')
+        result = named_tuple_fetchall(cursor)
+    print(result)
+    template = loader.get_template('amostras.html')
+    context = {'query_amostras_result_list': result,}
     
     return HttpResponse(template.render(context, request))
 

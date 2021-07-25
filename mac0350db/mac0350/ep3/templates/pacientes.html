@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h1>Lista de Pacientes</h1>
+  {% if query_pacientes_result_list %}
+    <p>TOTAL: {{query_pacientes_result_list | length}}</p>
+    {% for row in query_pacientes_result_list %}
+    <ul>
+      <li><p>CPF: {{row.cpf}}</p> </li>
+      <li><p>nome: {{row.nome}}</p> </li>
+      <li><p>Endereco: {{row.endereco}}</p> </li>
+      <li><p>Data de nascimento: {{row.nascimento}}</p> </li>
+    </ul>
+    <br>
+    {% endfor %}
+  {% else %}
+    <p>No results are available.</p>
+  {% endif %}
+</body>
+</html>
