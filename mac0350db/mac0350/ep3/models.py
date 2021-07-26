@@ -43,11 +43,12 @@ class Paciente(models.Model):
     
     def __str__(self):
         return self.nome
-
+        
 class Exame(models.Model):
     tipo = models.CharField(max_length=255) 
     virus = models.CharField(max_length=255)
-    id_paciente = models.ForeignKey(Paciente, on_delete=models.PROTECT) 
+    paciente = models.ForeignKey(Paciente, on_delete=models.PROTECT, default='')
+    #paciente = models.ManyToManyField(Paciente, through='Agregado_Paciente_Exame_Amostra') # se eu usar esse consigo filtrar
     # relação 1:n de paciente para exame
 
     class Meta:
@@ -62,8 +63,8 @@ class Amostra(models.Model):
     codigo_amostra = models.CharField(max_length=255) 
     metodo_de_coleta = models.CharField(max_length=255) 
     material = models.CharField(max_length=255)
+    #exame = models.ManyToManyField(Exame, through='Agregado_Paciente_Exame_Amostra')
     # uma amostra resulta de um exame de um paciente
-    exame = models.ManyToManyField(Exame, through='Agregado_Paciente_Exame_Amostra')
 
     class Meta:
         constraints = [
@@ -84,10 +85,8 @@ class Usuario_Possui_Perfil(models.Model):
                 ]
 
 class Agregado_Paciente_Exame_Amostra(models.Model):
-    paciente = models.OneToOneField(Paciente, on_delete=models.PROTECT)
-    #exame = models.OneToOneField(Exame, on_delete=models.PROTECT)
-    #amostra = models.OneToOneField(Amostra, on_delete=models.PROTECT)
-    exame = models.ForeignKey(Exame, on_delete=models.PROTECT)
+    paciente = models.ForeignKey(Paciente, on_delete=models.PROTECT) # um paciente pode ter mais de uma agregação
+    exame = models.OneToOneField(Exame, on_delete=models.PROTECT)
     amostra = models.ForeignKey(Amostra, on_delete=models.PROTECT)
     data_de_realizacao = models.DateTimeField(auto_now_add=True)
     data_de_solicitacao = models.DateTimeField(auto_now_add=True)
@@ -96,18 +95,6 @@ class Agregado_Paciente_Exame_Amostra(models.Model):
         constraints = [
                 models.UniqueConstraint(fields=['paciente', 'exame', 'amostra','data_de_realizacao'],
                 name='unique_agregado') ]
-"""
-class Agregado_Paciente_Exame_Amostra(models.Model):
-    paciente = models.OneToOneField(Paciente, on_delete=models.PROTECT)
-    #exame = models.OneToOneField(Exame, on_delete=models.PROTECT)
-    #amostra = models.OneToOneField(Amostra, on_delete=models.PROTECT)
-    exame = models.ForeignKey(Exame, on_delete=models.PROTECT)
-    amostra = models.ForeignKey(Amostra, on_delete=models.PROTECT)
-    data_de_realizacao = models.DateTimeField(auto_now_add=True)
-    data_de_solicitacao = models.DateTimeField(auto_now_add=True)
 
-    class Meta:
-        constraints = [
-                models.UniqueConstraint(fields=['paciente', 'exame', 'amostra','data_de_realizacao'],
-                name='unique_agregado') ]
-    """
+    def __str__(self):
+        return self.paciente.nome +','+ self.exame.virus +','+ self.exame.tipo +','+ self.amostra.codigo_amostra

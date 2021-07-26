@@ -79,7 +79,7 @@ def query_perfis(request):
 def query_pacientes(request):
     with connection.cursor() as cursor: # verificar nome da tabela e campos
         cursor.execute('\
-                SELECT p.cpf, p.nome, p.endereco, p.data_de_nascimento\
+                SELECT p.cpf, p.nome, p.endereco, p.nascimento\
                 FROM ep3_paciente as p\
                 ')
         result = named_tuple_fetchall(cursor)
@@ -92,8 +92,10 @@ def query_pacientes(request):
 def query_exames(request):
     with connection.cursor() as cursor: # verificar nome da tabela e campos
         cursor.execute('\
-                SELECT e.tipo, e.virus, e.id_paciente\
+                SELECT e.tipo, e.virus, p.nome as paciente\
                 FROM ep3_exame as e\
+                JOIN ep3_paciente as p\
+                ON e.paciente_id = p.id\
                 ')
         result = named_tuple_fetchall(cursor)
     print(result)
@@ -105,7 +107,7 @@ def query_exames(request):
 def query_amostras(request):
     with connection.cursor() as cursor: # verificar nome da tabela e campos
         cursor.execute('\
-                SELECT a.tipo, a.virus, a.id_paciente\
+                SELECT a.codigo_amostra, a.metodo_de_coleta, a.material\
                 FROM ep3_amostra as a\
                 ')
         result = named_tuple_fetchall(cursor)

@@ -86,9 +86,9 @@ DATABASES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '11221776@data', 
-        'USER': '11221776@data',
-        'PASSWORD': 'iulae7Oh', #senha para conectar no banco
+        'NAME': '9910568', 
+        'USER': '9910568',
+        'PASSWORD': 'oolah3Io', #senha para conectar no banco
         'HOST': 'data.ime.usp.br',
         'PORT': '23432',
     }

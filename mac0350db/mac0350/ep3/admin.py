@@ -16,14 +16,14 @@ class Agregado(admin.TabularInline):
     model = Agregado_Paciente_Exame_Amostra
     extra = 1
 
-class ResultaAmostra(admin.ModelAdmin):
+class ResultaExame(admin.ModelAdmin):
     inlines = (Agregado,)
 
 admin.site.register(Usuario, UsuarioAdmin)
 admin.site.register(Perfil)
 admin.site.register(Paciente)
-admin.site.register(Amostra, ResultaAmostra)
-admin.site.register(Exame)
+admin.site.register(Amostra)
+admin.site.register(Exame, ResultaExame)
 admin.site.register(Agregado_Paciente_Exame_Amostra)
 #como ligar os trÊs?
 
